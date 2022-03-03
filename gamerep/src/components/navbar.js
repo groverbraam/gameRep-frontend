@@ -7,9 +7,9 @@ const Navbar = () => {
   	<nav className="header">
       <h1>GameRep</h1>
       <div className="navlink"><a href="/">Home</a></div>
-      <div className="navlink"><a href="/">Discover</a></div>
-      <div className="navlink"><a href="/">Random Game</a></div>
-      <div className="navlink"><a href="/">Request Game</a></div>
+      <div className="navlink"><a href="/discover">Discover</a></div>
+      <div className="navlink"><a href="/random">Random Game</a></div>
+      <div className="navlink"><a href="/request">Request Game</a></div>
     </nav>
   );
  };

@@ -1,4 +1,4 @@
-h1 {
+h1, h3 {
   font-family: 'Syncopate', sans-serif;
   color: #326273;
   text-shadow: 2px 2px 2px #EEE;
@@ -7,7 +7,7 @@ h1 {
 h2 {
   font-family: 'Syncopate', sans-serif;
 }
-.header {
+.header, .footer {
   display: flex;
   width: 100%;
   background-color: #E39774;
@@ -67,4 +67,7 @@ h2 {
 }
 .faves h2 {
   color: #326273;
+}
+.footer {
+  margin-top: 3em;
 }
