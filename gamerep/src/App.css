@@ -25,7 +25,7 @@ h2 {
   background-color: #EEE;
   color: #E39774;
 }
-.container {
+.container, .quotes {
   display: flex;
   flex-direction: column;
   align-self: center;
@@ -35,8 +35,18 @@ h2 {
   width: 80%;
   height: 300px;
   overflow: scroll;
-  background-color: #326273;
+
   color: #eee;
+}
+.container {
+  background-color: #326273;
+}
+.quotes {
+  background-color: #E39774;
+  flex-direction: row;
+}
+.quotes p {
+  padding: 2em;
 }
 .faves {
   display:flex;
