@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 
-const Navbar = () => {
+const NavbarAuth = () => {
   const [isOpen, setOpen] = useState(false);
   return (
   	<nav className="header">
@@ -12,8 +12,9 @@ const Navbar = () => {
       <div className="navlink"><a href="/request">Request Game</a></div>
       <div className="navlink"><a href="/login">Log In</a></div>
       <div className="navlink"><a href="/signup">Sign Up</a></div>
+      <div className="navlink"><a href="/admin">Admin</a></div>
     </nav>
   );
  };
 
- export default Navbar;
+ export default NavbarAuth;
