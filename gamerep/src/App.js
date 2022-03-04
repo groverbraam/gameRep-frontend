@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {Routes, Route, BrowserRouter} from 'react-router-dom';
 import './App.css'
 import Home from './home.js'
+import Request from './request.js'
 import Navbar from './components/navbar.js'
 import Footer from './components/footer.js'
 const App = () => {
@@ -10,6 +11,7 @@ const App = () => {
       <Navbar />
       <Routes>
         <Route exact path="/" element={<Home />}/>
+        <Route exact path="/request" element={<Request />}/>
       </Routes>
       <Footer />
     </BrowserRouter>
