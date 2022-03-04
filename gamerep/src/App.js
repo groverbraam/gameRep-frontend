@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Routes, Route, BrowserRouter, useNavigate} from 'react-router-dom';
 import './App.css'
 import Home from './home'
@@ -19,7 +19,16 @@ const App = () => {
   const [toggleLogout, setToggleLogout] = useState(false)
   const [currentUser, setCurrentUser] = useState({})
   const [admin, setAdmin] = useState(false)
+  const [games, setGames] = useState(null)
 
+  useEffect(() => {
+    axios
+        .get('http://localhost:3000/games')
+        .then((response) => {
+          setGames(response.data);
+
+        })
+  }, [])
 
   const handleCreateUser = (userObj) => {
     axios.post('http://localhost:3000/signup', userObj).then((response) => {
@@ -70,7 +79,7 @@ const App = () => {
         <Route exact path="/" element={<Home />}/>
         <Route exact path="/login" element={<LoginForm handleToggleLogout={handleToggleLogout} toggleError={toggleError} errorMessage={errorMessage} handleAdmin={handleAdmin} />}/>
         <Route exact path="/signup" element={<SignUpForm handleCreateUser={handleCreateUser} toggleError={toggleError} errorMessage={errorMessage} />}/>
-        <Route exact path="/discover" element={<Discover admin={admin} />}/>
+        <Route exact path="/discover" element={<Discover games={games} />}/>
       </Routes>
       <Footer />
     </BrowserRouter>

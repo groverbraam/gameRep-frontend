@@ -1,8 +1,17 @@
-import React from 'react';
-const Discover = () => {
+import React, {useState, useEffect} from 'react';
+const Discover = (props) => {
+
   return(
     <>
-    <h1>yay this finally works</h1>
+    {props.games ?
+      props.games.map((game) => {
+        return <div> {
+          game.title
+        }
+        </div>
+      })
+    :
+    null }
     </>
   )
 }
