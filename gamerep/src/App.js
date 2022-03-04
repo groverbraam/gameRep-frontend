@@ -1,12 +1,6 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Routes, Route, BrowserRouter, useNavigate} from 'react-router-dom';
 import './App.css'
-<<<<<<< HEAD
-import Home from './home.js'
-import Request from './request.js'
-import Navbar from './components/navbar.js'
-import Footer from './components/footer.js'
-=======
 import Home from './home'
 import Navbar from './components/navbar'
 import NavbarAuth from './components/navbarAuth'
@@ -14,10 +8,12 @@ import Footer from './components/footer'
 import LoginForm from './loginform'
 import SignUpForm from './signupform'
 import Discover from './discover'
+import GamePage from './gameprof'
+import Request from './request'
+import Random from './random'
 import axios from 'axios'
 
 
->>>>>>> 8f502fd158e854cf2a0148d8adcff764e052dbe2
 const App = () => {
 
   const [toggleLogin, setToggleLogin] = useState(true)
@@ -26,7 +22,16 @@ const App = () => {
   const [toggleLogout, setToggleLogout] = useState(false)
   const [currentUser, setCurrentUser] = useState({})
   const [admin, setAdmin] = useState(false)
+  const [game, setGame] = useState([])
 
+  useEffect(() => {
+    axios
+        .get('http://localhost:3001/games')
+        .then((response) => {
+          setGame(response.data);
+          console.log(response);
+        })
+  }, [])
 
   const handleCreateUser = (userObj) => {
     axios.post('http://localhost:3000/signup', userObj).then((response) => {
@@ -75,13 +80,12 @@ const App = () => {
       {admin ? <NavbarAuth /> : <Navbar />}
       <Routes>
         <Route exact path="/" element={<Home />}/>
-<<<<<<< HEAD
+        <Route exact path="/gamepage" element={<GamePage />}/>
         <Route exact path="/request" element={<Request />}/>
-=======
+        <Route exact path="/random" element={<Random />}/>
         <Route exact path="/login" element={<LoginForm handleToggleLogout={handleToggleLogout} toggleError={toggleError} errorMessage={errorMessage} handleAdmin={handleAdmin} />}/>
         <Route exact path="/signup" element={<SignUpForm handleCreateUser={handleCreateUser} toggleError={toggleError} errorMessage={errorMessage} />}/>
         <Route exact path="/discover" element={<Discover admin={admin} />}/>
->>>>>>> 8f502fd158e854cf2a0148d8adcff764e052dbe2
       </Routes>
       <Footer />
     </BrowserRouter>

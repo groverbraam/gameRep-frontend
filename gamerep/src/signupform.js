@@ -17,7 +17,7 @@ const SignUpForm = (props) => {
   }
 
   return (
-    <div className="App" class='formContainer'>
+    <div className='formContainer'>
       <h1 className='formTitle'>Create an Account</h1>
       <form onSubmit={triggerCreateUser} className='inputForm'>
         <input type='text' placeholder='username' className='textInput' onChange={(event)=> {setUsername(event.target.value)}}/>
@@ -27,7 +27,7 @@ const SignUpForm = (props) => {
           :
           null
         }
-        <input type='submit' value='Register' className='submitBtn'/>
+        <input className='btn' type='submit' value='Register' className='btn'/>
       </form>
     </div>
   );

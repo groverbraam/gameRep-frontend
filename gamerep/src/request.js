@@ -14,7 +14,7 @@ const Request = () => {
         platforms: <input type="text"/><br/>
         description: <input type="text"/><br/>
         image link: <input type="text"/><br/>
-        <input type="submit" value="Request Game"/>
+        <input className="btn" type="submit" value="Request Game"/>
       </form>
     </div>
   </>

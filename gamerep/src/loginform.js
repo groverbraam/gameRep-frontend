@@ -63,7 +63,7 @@ const LoginForm = (props) => {
           :
           null
         }
-        <input type='submit' value='Login' className='submitBtn'/>
+        <input type='submit' value='Login' className='btn'/>
       </form>
     </div>
   );
