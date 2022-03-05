@@ -1,14 +1,17 @@
-import React from 'react';
-const Discover = () => {
+import React, {useState, useEffect} from 'react';
+const Discover = (props) => {
+
   return(
     <>
-    {games.map((game) => {
-      return( <div> {
-        game.title
-      }
-      </div>
-      )
-    })}
+    {props.games ?
+      props.games.map((game) => {
+        return <div> {
+          game.title
+        }
+        </div>
+      })
+    :
+    null }
     </>
   )
 }

@@ -22,14 +22,14 @@ const App = () => {
   const [toggleLogout, setToggleLogout] = useState(false)
   const [currentUser, setCurrentUser] = useState({})
   const [admin, setAdmin] = useState(false)
-  const [game, setGame] = useState([])
+  const [games, setGames] = useState(null)
 
   useEffect(() => {
     axios
-        .get('http://localhost:3001/games')
+        .get('http://localhost:3000/games')
         .then((response) => {
-          setGame(response.data);
-          console.log(response);
+          setGames(response.data);
+
         })
   }, [])
 
@@ -85,7 +85,7 @@ const App = () => {
         <Route exact path="/random" element={<Random />}/>
         <Route exact path="/login" element={<LoginForm handleToggleLogout={handleToggleLogout} toggleError={toggleError} errorMessage={errorMessage} handleAdmin={handleAdmin} />}/>
         <Route exact path="/signup" element={<SignUpForm handleCreateUser={handleCreateUser} toggleError={toggleError} errorMessage={errorMessage} />}/>
-        <Route exact path="/discover" element={<Discover admin={admin} />}/>
+        <Route exact path="/discover" element={<Discover games={games} />}/>
       </Routes>
       <Footer />
     </BrowserRouter>
