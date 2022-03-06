@@ -23,6 +23,18 @@ const App = () => {
   const [currentUser, setCurrentUser] = useState({})
   const [admin, setAdmin] = useState(false)
   const [games, setGames] = useState(null)
+  const [newGameFormSubmit, setNewGame] = useState('')
+  const [newTitle, setNewTitle] = useState('')
+  const [newImage, setNewImage] = useState('')
+  const [newReleaseDate, setNewReleaseDate] = useState('')
+  const [newDeveloper, setNewDeveloper] = useState('')
+  const [newGenre, setNewGenre] = useState('')
+  const [newRepresentation, setNewRepresentation] = useState('')
+  const [newPlatforms, setNewPlatforms] = useState('')
+  const [newDescription, setNewDescription] = useState('')
+  const [newTrailer, setNewTrailer] = useState('')
+
+
 
   useEffect(() => {
     axios
@@ -75,14 +87,73 @@ const App = () => {
     }
   }
 
+
+  const handleNewGame = (event) => {
+    setNewGame(event.target.value)
+  }
+  const handleNewTitle = (event) => {
+    setNewTitle(event.target.value)
+    console.log(newTitle);
+  }
+  const handleNewImage = (event) => {
+    setNewImage(event.target.value)
+  }
+  const handleNewReleaseDate = (event) => {
+    setNewReleaseDate(event.target.value)
+  }
+  const handleNewDeveloper = (event) => {
+    setNewDeveloper(event.target.value)
+  }
+  const handleNewGenre = (event) => {
+    setNewGenre(event.target.value)
+  }
+  const handleNewRepresentation = (event) => {
+    setNewRepresentation(event.target.value)
+  }
+  const handleNewPlatforms = (event) => {
+    setNewPlatforms(event.target.value)
+  }
+  const handleNewDescription = (event) => {
+    setNewDescription(event.target.value)
+  }
+  const handleNewTrailer = (event) => {
+    setNewTrailer(event.target.value)
+  }
+
+  const handleNewGameFormSubmit = (event) => {
+    event.preventDefault();
+    axios.post(
+      'http://localhost:3000/games', {
+        image: newImage,
+        title: newTitle,
+        releaseDate: newReleaseDate,
+        developer: newDeveloper,
+        genre: newGenre,
+        representation: newRepresentation,
+        platforms: newPlatforms,
+        description: newDescription,
+        trailer: newTrailer
+      }
+    ).then(() => {
+      axios
+        .get('http://localhost:3000/games')
+        .then((response)=>{
+          setNewGame(response.data)
+        })
+    })
+  }
   return (
     <BrowserRouter>
       {admin ? <NavbarAuth /> : <Navbar />}
       <Routes>
         <Route exact path="/" element={<Home />}/>
         <Route exact path="/gamepage" element={<GamePage />}/>
-        <Route exact path="/request" element={<Request />}/>
-        <Route exact path="/random" element={<Random />}/>
+        <Route exact path="/request" element={<Request
+          handleNewGameFormSubmit={handleNewGameFormSubmit} handleNewTitle={handleNewTitle} handleNewImage={handleNewImage} handleNewDescription={handleNewDescription}
+        handleNewTrailer={handleNewTrailer} handleNewRepresentation={handleNewRepresentation}
+        handleNewGenre={handleNewGenre} handleNewDeveloper={handleNewDeveloper}
+        handleNewReleaseDate={handleNewReleaseDate} handleNewPlatforms={handleNewPlatforms}/>}/>
+        <Route exact path="/random" element={<Random games={games}/>}/>
         <Route exact path="/login" element={<LoginForm handleToggleLogout={handleToggleLogout} toggleError={toggleError} errorMessage={errorMessage} handleAdmin={handleAdmin} />}/>
         <Route exact path="/signup" element={<SignUpForm handleCreateUser={handleCreateUser} toggleError={toggleError} errorMessage={errorMessage} />}/>
         <Route exact path="/discover" element={<Discover games={games} />}/>
