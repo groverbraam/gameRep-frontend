@@ -13,7 +13,7 @@ const Home = () => (
   <div className="container" className="quotes">
   <h2> what representation means to me..</h2>
     <p>
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed maximus erat nec magna bibendum semper. Phasellus venenatis, dolor eget aliquam tempus, tellus ex aliquam massa, non aliquam quam lectus sit amet turpis. Cras diam massa, rhoncus vitae commodo non, rutrum ac ex. Duis vestibulum eleifend tortor id malesuada."
+    "So it's hard for me to describe how I feel about my own representation in video games. It's a weird sort of apathy? There is no south asian representation in video games and very little in Western entertainment culture at all. It's not even disappointment as much as it's just normal, which is pretty sad to think about." - <span>Eesha (21) </span>
     </p>
     <p>"Fusce suscipit augue eget luctus mollis. Ut quis viverra risus. Cras purus risus, ullamcorper vehicula dapibus at, elementum at quam. Fusce id felis non est lobortis elementum."</p>
     <p>"Mauris neque purus, fermentum ac condimentum nec, gravida non mi. Curabitur ut dui viverra neque pellentesque egestas."</p>
