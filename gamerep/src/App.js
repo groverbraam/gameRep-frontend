@@ -8,8 +8,9 @@ import Footer from './components/footer'
 import LoginForm from './loginform'
 import SignUpForm from './signupform'
 import Discover from './discover'
-import GamePage from './gameprof'
+import GamePage from './GamePage'
 import Request from './request'
+import Edit from './edit'
 import Random from './random'
 import axios from 'axios'
 
@@ -18,21 +19,21 @@ const App = () => {
 
   const [toggleLogin, setToggleLogin] = useState(true)
   const [toggleError, setToggleError] = useState(false)
-  const [errorMessage, setErrorMessage] = useState('')
+  const [errorMessage, setErrorMessage] = useState(null)
   const [toggleLogout, setToggleLogout] = useState(false)
   const [currentUser, setCurrentUser] = useState({})
   const [admin, setAdmin] = useState(false)
   const [games, setGames] = useState(null)
-  const [newGameFormSubmit, setNewGame] = useState('')
-  const [newTitle, setNewTitle] = useState('')
-  const [newImage, setNewImage] = useState('')
-  const [newReleaseDate, setNewReleaseDate] = useState('')
-  const [newDeveloper, setNewDeveloper] = useState('')
-  const [newGenre, setNewGenre] = useState('')
-  const [newRepresentation, setNewRepresentation] = useState('')
-  const [newPlatforms, setNewPlatforms] = useState('')
-  const [newDescription, setNewDescription] = useState('')
-  const [newTrailer, setNewTrailer] = useState('')
+  const [newGameFormSubmit, setNewGame] = useState(null)
+  const [newTitle, setNewTitle] = useState(null)
+  const [newImage, setNewImage] = useState(null)
+  const [newReleaseDate, setNewReleaseDate] = useState(null)
+  const [newDeveloper, setNewDeveloper] = useState(null)
+  const [newGenre, setNewGenre] = useState(null)
+  const [newRepresentation, setNewRepresentation] = useState(null)
+  const [newPlatforms, setNewPlatforms] = useState(null)
+  const [newDescription, setNewDescription] = useState(null)
+  const [newTrailer, setNewTrailer] = useState(null)
 
 
 
@@ -142,6 +143,42 @@ const App = () => {
         })
     })
   }
+
+  const handleDelete = (games) => {
+    axios
+      .delete(`http://localhost:3000/games/${games._id}`)
+      .then((response) => {
+        axios
+          .get('http://localhost:3000/games')
+          .then((response) => {
+            setGames(response.data)
+          })
+      })
+  }
+
+  const handleEdit = (games) => {
+    axios
+      .put(`http://localhost:3000/games/${games._id}`,
+      {
+        image: newImage,
+        title: newTitle,
+        releaseDate: newReleaseDate,
+        developer: newDeveloper,
+        genre: newGenre,
+        representation: newRepresentation,
+        platforms: newPlatforms,
+        description: newDescription,
+        trailer: newTrailer
+      })
+      .then(() => {
+        axios
+          .get('http://localhost:3000/games')
+          .then((response) => {
+            setGames(response.data)
+          })
+      })
+  }
+
   return (
     <BrowserRouter>
       {admin ? <NavbarAuth /> : <Navbar />}
@@ -152,11 +189,13 @@ const App = () => {
           handleNewGameFormSubmit={handleNewGameFormSubmit} handleNewTitle={handleNewTitle} handleNewImage={handleNewImage} handleNewDescription={handleNewDescription}
         handleNewTrailer={handleNewTrailer} handleNewRepresentation={handleNewRepresentation}
         handleNewGenre={handleNewGenre} handleNewDeveloper={handleNewDeveloper}
-        handleNewReleaseDate={handleNewReleaseDate} handleNewPlatforms={handleNewPlatforms}/>}/>
+        handleNewReleaseDate={handleNewReleaseDate} handleNewPlatforms={handleNewPlatforms} handleDelete={handleDelete}/>}/>
         <Route exact path="/random" element={<Random games={games}/>}/>
         <Route exact path="/login" element={<LoginForm handleToggleLogout={handleToggleLogout} toggleError={toggleError} errorMessage={errorMessage} handleAdmin={handleAdmin} />}/>
         <Route exact path="/signup" element={<SignUpForm handleCreateUser={handleCreateUser} toggleError={toggleError} errorMessage={errorMessage} />}/>
-        <Route exact path="/discover" element={<Discover games={games} />}/>
+        <Route exact path="/discover" element={games ? <Discover games={games} handleDelete={handleDelete} handleEdit={handleEdit} /> : null}/>
+        <Route exact path="/games/:id" element={games ? <GamePage games={games} /> : null}/>
+        <Route exact path="/games/edit/:id" element={games ? <Edit games={games} handleEdit={handleEdit} />: null }/>
       </Routes>
       <Footer />
     </BrowserRouter>
