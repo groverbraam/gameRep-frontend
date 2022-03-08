@@ -12,6 +12,8 @@ import GamePage from './GamePage'
 import Request from './request'
 import Edit from './edit'
 import Random from './random'
+import Admin from './admin'
+import RequestsAdmin from './requestAdmin'
 import axios from 'axios'
 
 
@@ -22,8 +24,9 @@ const App = () => {
   const [errorMessage, setErrorMessage] = useState(null)
   const [toggleLogout, setToggleLogout] = useState(false)
   const [currentUser, setCurrentUser] = useState({})
-  const [admin, setAdmin] = useState(false)
+  const [admin, setAdmin] = useState(null)
   const [games, setGames] = useState(null)
+  const [requests, setRequests] = useState(null)
   const [newGameFormSubmit, setNewGame] = useState(null)
   const [newTitle, setNewTitle] = useState(null)
   const [newImage, setNewImage] = useState(null)
@@ -42,6 +45,12 @@ const App = () => {
         .get('http://localhost:3000/games')
         .then((response) => {
           setGames(response.data);
+
+        })
+    axios
+        .get('http://localhost:3000/requests')
+        .then((response) => {
+          setRequests(response.data);
 
         })
   }, [])
@@ -121,10 +130,10 @@ const App = () => {
     setNewTrailer(event.target.value)
   }
 
-  const handleNewGameFormSubmit = (event) => {
+  const handleNewGameFormSubmit = (event, request) => {
     event.preventDefault();
     axios.post(
-      'http://localhost:3000/games', {
+      'http://localhost:3000/requests', {
         image: newImage,
         title: newTitle,
         releaseDate: newReleaseDate,
@@ -154,6 +163,40 @@ const App = () => {
             setGames(response.data)
           })
       })
+  }
+
+  const handleDeleteAdmin = (request) => {
+    axios
+      .delete(`http://localhost:3000/requests/${request._id}`)
+      .then((response) => {
+        axios
+          .get('http://localhost:3000/requests')
+          .then((response) => {
+            setRequests(response.data)
+          })
+      })
+  }
+
+  const handleAddAdmin = (request) => {
+    axios.post(
+      'http://localhost:3000/games', {
+        image: newImage,
+        title: newTitle,
+        releaseDate: newReleaseDate,
+        developer: newDeveloper,
+        genre: newGenre,
+        representation: newRepresentation,
+        platforms: newPlatforms,
+        description: newDescription,
+        trailer: newTrailer
+      }
+    ).then(() => {
+      axios
+        .get('http://localhost:3000/games')
+        .then((response)=>{
+          setNewGame(response.data)
+        })
+    })
   }
 
   const handleEditLoad = (games) => {
@@ -208,6 +251,11 @@ const App = () => {
         {/*<Route exact path="/random" element={<Random games={games}/>}/>*/}
         <Route exact path="/login" element={<LoginForm handleToggleLogout={handleToggleLogout} toggleError={toggleError} errorMessage={errorMessage} handleAdmin={handleAdmin} />}/>
         <Route exact path="/signup" element={<SignUpForm handleCreateUser={handleCreateUser} toggleError={toggleError} errorMessage={errorMessage} />}/>
+        <Route exact path="/admin" element={games ? <Admin games={games} handleDelete={handleDelete} handleEdit={handleEdit} handleGameDetails={handleGameDetails} handleEditLoad={handleEditLoad} /> : null}/>
+        <Route exact path="/admin/requests" element={games ? <RequestsAdmin requests={requests} handleDeleteAdmin={handleDeleteAdmin} handleAddAdmin={handleAddAdmin} handleNewTitle={handleNewTitle} handleNewImage={handleNewImage} handleNewDescription={handleNewDescription}
+      handleNewTrailer={handleNewTrailer} handleNewRepresentation={handleNewRepresentation}
+      handleNewGenre={handleNewGenre} handleNewDeveloper={handleNewDeveloper}
+      handleNewReleaseDate={handleNewReleaseDate} handleNewPlatforms={handleNewPlatforms} /> : null}/>
         <Route exact path="/discover" element={games ? <Discover games={games} handleDelete={handleDelete} handleEdit={handleEdit} handleGameDetails={handleGameDetails} handleEditLoad={handleEditLoad} /> : null}/>
         <Route exact path="/games/:id" element={games ? <GamePage games={games} /> : null}/>
         <Route exact path="/games/edit/:id" element={games ? <Edit games={games} handleEdit={handleEdit} handleNewTitle={handleNewTitle} handleNewImage={handleNewImage} handleNewDescription={handleNewDescription}

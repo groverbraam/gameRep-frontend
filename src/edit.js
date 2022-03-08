@@ -19,7 +19,7 @@ const Edit = (props) => {
         description: <input type="text" defaultValue={props.games.description} onChange={props.handleNewDescription}/><br/>
         image link: <input type="text" defaultValue={props.games.image} onChange={props.handleNewImage}/><br/>
         trailer link: <input type="text" defaultValue={props.games.trailer} onChange={props.handleNewTrailer}/><br/>
-        <button className="btn" type="submit"><a href="/discover">Edit Game</a></button>
+        <button className="btn" type="submit">Edit Game</button>
       </form>
       {console.log(props.games)}
     </div>
