@@ -4,6 +4,7 @@ const GamePage = (props) => {
   <>
   {props.games ?
     <div>
+    <a href="/discover">Back to Discover</a>
       <div className="gameinfo" key={props.games._id}>
         <h1>{props.games.title}</h1>
         <img src={props.games.image}/>

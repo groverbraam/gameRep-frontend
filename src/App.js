@@ -112,7 +112,7 @@ const App = () => {
     setNewRepresentation(event.target.value)
   }
   const handleNewPlatforms = (event) => {
-    setNewPlatforms(event.target.value)
+    setNewPlatforms([event.target.value])
   }
   const handleNewDescription = (event) => {
     setNewDescription(event.target.value)
@@ -156,9 +156,19 @@ const App = () => {
       })
   }
 
-  const handleEdit = (games) => {
+  const handleEditLoad = (games) => {
     axios
-      .put(`http://localhost:3000/games/${games._id}`,
+      .get(`http://localhost:3000/games/edit/${games._id}`)
+      .then((response) => {
+        setGames(response.data)
+      })
+  }
+
+  const handleEdit = (event) => {
+    {console.log(`${games._id}`)}
+    event.preventDefault();
+    axios
+      .put(`http://localhost:3000/games/edit/${games._id}`,
       {
         image: newImage,
         title: newTitle,
@@ -170,32 +180,40 @@ const App = () => {
         description: newDescription,
         trailer: newTrailer
       })
-      .then(() => {
-        axios
-          .get('http://localhost:3000/games')
-          .then((response) => {
-            setGames(response.data)
-          })
-      })
+      axios
+        .get('http://localhost:3000/games')
+        .then((response)=>{
+          setNewGame(response.data)
+        })
+        {console.log(`http://localhost:3000/games/edit/${games._id}`)}
   }
 
+  const handleGameDetails = (game) => {
+    axios
+      .get(`http://localhost:3000/games/${game._id}`)
+      .then((response) => {
+        setGames(response.data)
+      })
+  }
   return (
     <BrowserRouter>
       {admin ? <NavbarAuth /> : <Navbar />}
       <Routes>
         <Route exact path="/" element={<Home />}/>
-        <Route exact path="/gamepage" element={<GamePage />}/>
         <Route exact path="/request" element={<Request
           handleNewGameFormSubmit={handleNewGameFormSubmit} handleNewTitle={handleNewTitle} handleNewImage={handleNewImage} handleNewDescription={handleNewDescription}
         handleNewTrailer={handleNewTrailer} handleNewRepresentation={handleNewRepresentation}
         handleNewGenre={handleNewGenre} handleNewDeveloper={handleNewDeveloper}
         handleNewReleaseDate={handleNewReleaseDate} handleNewPlatforms={handleNewPlatforms} handleDelete={handleDelete}/>}/>
-        <Route exact path="/random" element={<Random games={games}/>}/>
+        {/*<Route exact path="/random" element={<Random games={games}/>}/>*/}
         <Route exact path="/login" element={<LoginForm handleToggleLogout={handleToggleLogout} toggleError={toggleError} errorMessage={errorMessage} handleAdmin={handleAdmin} />}/>
         <Route exact path="/signup" element={<SignUpForm handleCreateUser={handleCreateUser} toggleError={toggleError} errorMessage={errorMessage} />}/>
-        <Route exact path="/discover" element={games ? <Discover games={games} handleDelete={handleDelete} handleEdit={handleEdit} /> : null}/>
+        <Route exact path="/discover" element={games ? <Discover games={games} handleDelete={handleDelete} handleEdit={handleEdit} handleGameDetails={handleGameDetails} handleEditLoad={handleEditLoad} /> : null}/>
         <Route exact path="/games/:id" element={games ? <GamePage games={games} /> : null}/>
-        <Route exact path="/games/edit/:id" element={games ? <Edit games={games} handleEdit={handleEdit} />: null }/>
+        <Route exact path="/games/edit/:id" element={games ? <Edit games={games} handleEdit={handleEdit} handleNewTitle={handleNewTitle} handleNewImage={handleNewImage} handleNewDescription={handleNewDescription}
+      handleNewTrailer={handleNewTrailer} handleNewRepresentation={handleNewRepresentation}
+      handleNewGenre={handleNewGenre} handleNewDeveloper={handleNewDeveloper}
+      handleNewReleaseDate={handleNewReleaseDate} handleNewPlatforms={handleNewPlatforms} handleDelete={handleDelete} />: null }/>
       </Routes>
       <Footer />
     </BrowserRouter>
