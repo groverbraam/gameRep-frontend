@@ -42,6 +42,14 @@ h2 {
 .container {
   background-color: #326273;
 }
+.container a{
+  text-decoration: none;
+  color: #E39774;
+}
+.container a:hover{
+  text-decoration: none;
+  color: #EEE;
+}
 .quotes {
   background-color: #E39774;
   flex-direction: row;
@@ -53,6 +61,7 @@ h2 {
   display:flex;
   flex-direction: column;
   text-align: center;
+  margin-bottom: 7em;
 }
 .grid {
   display:flex;
@@ -129,6 +138,7 @@ li {
 .trailer {
   width: 80%;
   margin: 2em;
+  margin-bottom: 8em;
 }
 .vid {
   width: 100%;
